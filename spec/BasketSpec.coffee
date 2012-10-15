@@ -48,6 +48,32 @@ describe "Basket Class", ->
 			test.basket.add(test.item, 2)
 			expect(test.basket.calculateTotal()).toEqual 1798
 
+	describe "#remove", ->
+		it "returns false if the item doesn't exist", ->
+			expect(test.basket.remove 122).toBeFalsy()	
+
+		it "removes a number of items if specified", ->
+			test.basket.add(test.item, 5)
+			prevCountVal = test.basket.getQuantity 1
+			test.basket.remove 1, 1
+			expect(test.basket.getQuantity 1).toEqual 4
+
+		it "removes all the items if number is not specified", ->
+			test.basket.add(test.item, 1)
+			test.basket.remove 1 
+			expect(test.basket.getQuantity 1).toBeFalsy()
+
+		it "removes all if there's a larger amount specified", ->
+			test.basket.add(test.item, 4)
+			test.basket.remove 1, 6
+			expect(test.basket.getQuantity 1).toBeFalsy()
+
+		it "removes all if given exact amount", ->
+			test.basket.add(test.item, 4)
+			test.basket.remove 1, 4
+			expect(test.basket.getQuantity 1).toBeFalsy()			
+
+
 	describe "helper functions", ->
 		describe "getQuantity", ->
 			it "returns false if there's no item with that id", ->

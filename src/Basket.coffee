@@ -47,3 +47,6 @@ class Basket
 			total += i.item.cost * i.quantity
 		total
 
+
+	remove: (item_id, quantity) ->
+
