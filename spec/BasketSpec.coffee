@@ -4,8 +4,8 @@ describe "Basket Class", ->
 	beforeEach ->
 		test.basket = new Basket()
 		test.item = new Item 1, "Macbook Air", "Newer, thinner, better", 799
-		item2 = new Item 2, "Magic Trackpad", "Better", 50
-		test.basket.add item2, 1
+		test.item2 = new Item 2, "Magic Trackpad", "Better", 50
+		test.basket.add test.item2, 1
 		false
 
 	it  "is able to add a new item", ->
@@ -34,6 +34,19 @@ describe "Basket Class", ->
 		priorCountVal = test.basket.distinctCount
 		test.basket.add(test.item, 1)
 		expect(test.basket.distinctCount).toEqual priorCountVal
+
+	describe "total cost", ->
+		it "calculates the total cost when there's 1 item in the basket", ->
+			expect(test.basket.calculateTotal()).toEqual 50
+
+		it "calculates the total cost for 1 item type with quantity > 1", ->
+			test.basket.add(test.item2, 3)
+			expect(test.basket.calculateTotal()).toEqual 200
+
+		it "calculates the total cost when there are multiple types of items", ->
+			test.basket.add(test.item2, 3)
+			test.basket.add(test.item, 2)
+			expect(test.basket.calculateTotal()).toEqual 1798
 
 	describe "helper functions", ->
 		describe "getQuantity", ->
