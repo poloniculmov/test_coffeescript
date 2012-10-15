@@ -3,6 +3,11 @@ class Basket
 	distinctCount: 0
 	totalCount: 0
 
+	constructor: () ->
+		@distinctCount = 0
+		@totalCount = 0
+		@items = []
+
 	add: (item, quantity) ->
 		if @itemExistsInBasket item.id
 			currentItemLocation = @getItemLocation item.id
