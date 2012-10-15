@@ -13,10 +13,12 @@ describe "Basket Class", ->
 		test.basket.add test.item, 1
 		expect(test.basket.distinctCount).toEqual priorCountVal + 1
 
-	it "updates the qunatity when adding an item already in the basket", ->
+	it "updates the quantity when adding an item already in the basket", ->
+		test.basket.add test.item, 1
 		priorCountVal = test.basket.getQuantity(1)
 		test.basket.add test.item, 1
 		expect(test.basket.getQuantity 1).toEqual priorCountVal + 1
+
 
 
 	describe "helper functions", ->
