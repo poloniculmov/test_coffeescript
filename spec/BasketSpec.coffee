@@ -30,3 +30,13 @@ describe "Basket Class", ->
 			it "returns the quantity if the there's an item with that id", ->
 				expect(test.basket.getQuantity 2).toEqual 1
 
+		describe "itemExistsInBasket", ->
+			it "returns false if there's no item with that id", ->
+				expect(test.basket.itemExistsInBasket 1223).toBeFalsy()
+
+			it "returns true if there's an item with that id", ->
+				expect(test.basket.itemExistsInBasket 2).toBeTruthy()
+
+			it "returns false if given a string", ->
+				expect(test.basket.itemExistsInBasket "hello dolly").toBeFalsy()
+			
