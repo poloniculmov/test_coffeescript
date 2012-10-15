@@ -39,4 +39,13 @@ describe "Basket Class", ->
 
 			it "returns false if given a string", ->
 				expect(test.basket.itemExistsInBasket "hello dolly").toBeFalsy()
-			
+
+		describe "getItemLocation", ->
+			it "returns the location in the items array if item exists", ->
+				expect(test.basket.getItemLocation 2).toEqual 0
+			it "returns false if the item doesn't exist", ->
+				expect(test.basket.getItemLocation 324).toBeFalsy()
+
+			it "returns false if given a string", ->
+				expect(test.basket.getItemLocation "location").toBeFalsy()
+
