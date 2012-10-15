@@ -19,7 +19,21 @@ describe "Basket Class", ->
 		test.basket.add test.item, 1
 		expect(test.basket.getQuantity 1).toEqual priorCountVal + 1
 
+	it "updates the total count by 1 after adding a new item", ->
+		priorCountVal = test.basket.totalCount
+		test.basket.add(test.item, 1)
+		expect(test.basket.totalCount).toEqual priorCountVal+1
 
+	it "updates the distinct count by 1 after a adding a new item", ->
+		priorCountVal = test.basket.distinctCount
+		test.basket.add(test.item, 1)
+		expect(test.basket.distinctCount).toEqual priorCountVal+1
+
+	it "doesn't change the distinct count when adding an existing item", ->
+		test.basket.add(test.item, 1)
+		priorCountVal = test.basket.distinctCount
+		test.basket.add(test.item, 1)
+		expect(test.basket.distinctCount).toEqual priorCountVal
 
 	describe "helper functions", ->
 		describe "getQuantity", ->
