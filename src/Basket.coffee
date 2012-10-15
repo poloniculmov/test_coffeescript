@@ -13,11 +13,10 @@ class Basket
 			currentItemLocation = @getItemLocation item.id
 			@items[currentItemLocation].quantity += quantity
 		else
-			@items.push {
+			@items.push 
 				"item_id" : item.id,
 				"quantity" : quantity,
 				"item": item
-			}
 			@distinctCount++
 
 		@totalCount += quantity
@@ -47,20 +46,28 @@ class Basket
 			total += i.item.cost * i.quantity
 		total
 
+	updateItems: ->
+		newArr = []
+		for i in @items
+			unless i is null
+				newArr.push i
+		@items = newArr
 
 	remove: (item_id, quantity="all") ->
 		return false if not @itemExistsInBasket item_id
 		removeAll = (item_id) =>
 			i = @getItemLocation item_id
 			@items.splice(i,i+1)
+			@updateItems()
 		removeQuantity = (quantity, item_loc) =>
 			@items[item_loc].quantity -= quantity
-		if quantity is "all"
-			removeAll item_id
-		else
+		if quantity isnt "all"
 			loc = @getItemLocation item_id
 			item = @items[loc]
 			if item.quantity <= quantity
 				removeAll item_id
 			else
-				removeQuantity quantity, loc
+				removeQuantity quantity, loc		
+		else
+			removeAll item_id
+
