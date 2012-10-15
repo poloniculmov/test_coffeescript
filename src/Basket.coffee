@@ -48,5 +48,19 @@ class Basket
 		total
 
 
-	remove: (item_id, quantity) ->
-
+	remove: (item_id, quantity="all") ->
+		return false if not @itemExistsInBasket item_id
+		removeAll = (item_id) =>
+			i = @getItemLocation item_id
+			@items.splice(i,i+1)
+		removeQuantity = (quantity, item_loc) =>
+			@items[item_loc].quantity -= quantity
+		if quantity is "all"
+			removeAll item_id
+		else
+			loc = @getItemLocation item_id
+			item = @items[loc]
+			if item.quantity <= quantity
+				removeAll item_id
+			else
+				removeQuantity quantity, loc
