@@ -1,12 +1,11 @@
 class Basket
-	items: []
-	distinctCount: 0
-	totalCount: 0
 
 	constructor: () ->
 		@distinctCount = 0
 		@totalCount = 0
 		@items = []
+		@discount = 0
+
 
 	add: (item, quantity) ->
 		if @itemExistsInBasket item.id
@@ -44,7 +43,7 @@ class Basket
 		total = 0 
 		for i in @items 
 			total += i.item.cost * i.quantity
-		total
+		( total - ( @discount / 100 ) * total )
 
 	updateItems: ->
 		newArr = []
@@ -71,3 +70,8 @@ class Basket
 		else
 			removeAll item_id
 
+	applyDiscount: (discount) ->
+		discount = Math.abs(discount)
+		discount = 100 if discount > 100
+		@discount = discount
+		@calculateTotal()
