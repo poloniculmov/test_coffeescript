@@ -2,6 +2,12 @@ describe "Basket Class", ->
 	test = {}
 
 	beforeEach ->
+		@addMatchers
+			toBeDiscounted: (orig, discount) ->
+				actual = @actual
+				@message = -> "Expected #{actual} to be #{discount} of #{orig}"
+				actual is (orig * (1 - (discount / 100)))
+
 		test.basket = new Basket()
 		test.item = new Item 1, "Macbook Air", "Newer, thinner, better", 799
 		test.item2 = new Item 2, "Magic Trackpad", "Better", 50
@@ -104,3 +110,17 @@ describe "Basket Class", ->
 			it "returns false if given a string", ->
 				expect(test.basket.getItemLocation "location").toBeFalsy()
 
+	describe "discounts", ->
+		it "applies discounts", ->
+			expect(test.basket.applyDiscount(10)).toEqual 45
+			expect(test.basket.applyDiscount(50)).toEqual 25
+
+		it "will not apply a discount > 100%", ->
+			expect(test.basket.applyDiscount 120).toEqual 0
+
+		it "will treat negative numbers as positive ones", ->
+			expect(test.basket.applyDiscount -20).toEqual 40
+
+		it "persists the discount", ->
+			expect(test.basket.applyDiscount 10).toBeDiscounted(50, 10)
+			expect(test.basket.calculateTotal()).toEqual 45
