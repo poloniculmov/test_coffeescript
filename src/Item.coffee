@@ -14,3 +14,5 @@ class Item
 		for key in @protectedFields
 			return true if key is field
 		false
+
+	getRatings: ->

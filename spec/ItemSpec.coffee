@@ -2,6 +2,13 @@ describe "Item", ->
 	test = {}
 	beforeEach -> 
 		test.item = new Item 1, "mouse", "funnnny", 50
+		spyOn(test.item, 'getRatings').andCallFake ->
+			JSON.parse(
+				'{"ratings":[{"rating":4,"review":"This is a really great product","source":"Amazon"},
+				{"rating":1,"review":"I didnt really like it that much it wasnt very good","source":"PC World"},
+				{"rating":3,"review":"Its pretty average.","source":"Ebay"}]}'
+			)
+
 
 	describe "updating", ->
 		it "updates only the props passed", ->
@@ -44,5 +51,12 @@ describe "Item", ->
 
 				it "returns false if field doesn't exist", ->
 					expect(test.item.isProtected "castron").toBeFalsy()
+
+	describe 'getting ratings', ->
+		it 'returns three of the latest ratings',  ->
+			expect(test.item.getRatings().ratings.length).toEqual 3
+
+		it 'parses an individual rating\'s score', ->
+			expect(test.item.getRatings().ratings[0].rating).toEqual 4
 
 			
