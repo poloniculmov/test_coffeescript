@@ -124,3 +124,10 @@ describe "Basket Class", ->
 		it "persists the discount", ->
 			expect(test.basket.applyDiscount 10).toBeDiscounted(50, 10)
 			expect(test.basket.calculateTotal()).toEqual 45
+
+		describe 'Coupons', ->
+			it 'applies a 10% discount with a valid coupon', ->
+				expect(test.basket.applyCoupon 'AA12' ).toBeDiscounted 50, 10
+				expect(test.basket.applyCoupon 'BB34' ).toBeDiscounted 50, 10
+				expect(test.basket.calculateTotal()).toBeDiscounted 50, 10
+				
