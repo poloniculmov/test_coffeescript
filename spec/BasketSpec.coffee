@@ -130,4 +130,8 @@ describe "Basket Class", ->
 				expect(test.basket.applyCoupon 'AA12' ).toBeDiscounted 50, 10
 				expect(test.basket.applyCoupon 'BB34' ).toBeDiscounted 50, 10
 				expect(test.basket.calculateTotal()).toBeDiscounted 50, 10
-				
+
+			it "doesn't apply any discount with an invalid coupon", ->
+				expect(test.basket.applyCoupon 'INVALID').toEqual false
+				expect(test.basket.applyCoupon 'CC12').toEqual false
+				expect(test.basket.calculateTotal()).toEqual 50
