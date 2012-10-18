@@ -75,3 +75,12 @@ class Basket
 		discount = 100 if discount > 100
 		@discount = discount
 		@calculateTotal()
+
+	applyCoupon: (coupon_code) ->
+		if coupon_code in @coupons.validCodes
+			@applyDiscount 10
+		else
+			false
+
+	coupons:
+		validCodes: ['AA12', 'BB34', 'CC45']
